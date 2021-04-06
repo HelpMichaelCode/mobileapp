@@ -7,7 +7,7 @@
  */
 
 import React, {useEffect, useState} from 'react';
-import {Card, Title} from 'react-native-paper';
+import {Card, Title, Headline, Snackbar } from 'react-native-paper';
 import axios from 'axios';
 import {
   StyleSheet,
@@ -50,9 +50,10 @@ const App: () => React$Node = () => {
   return (
     <>
     <SafeAreaView>
-      <ScrollView >
+      <ScrollView>
+        <Text style={styles.mainHeading}>Cocktails</Text>
         {displayDrinks()}
-      </ScrollView >
+      </ScrollView>
     </SafeAreaView>
      
     </>
@@ -60,6 +61,16 @@ const App: () => React$Node = () => {
 };
 
 const styles = StyleSheet.create({
+  mainHeading: 
+  {
+    fontSize: 35,
+    fontFamily: 'sans-serif-light',
+    textAlign: 'center',
+    marginBottom: 25,
+    backgroundColor: '#ff4e50',
+    paddingBottom: 10,
+    paddingTop: 10,
+  },
   image: 
   {
     width: 350,
@@ -71,7 +82,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontFamily: 'sans-serif-light',
     fontSize: 25,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   contentStyle: 
   {
