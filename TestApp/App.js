@@ -6,71 +6,66 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import {Card, Title} from 'react-native-paper';
+import axios from 'axios';
 import {
-  SafeAreaView,
   StyleSheet,
-  ScrollView,
   View,
   Text,
-  StatusBar,
+  FlatList,
+  Image,
+  ScrollView,
+  SafeAreaView,
 } from 'react-native';
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
 const App: () => React$Node = () => {
+  const [collectionOfDrinks, setDrinkCollection] = useState([]);
+
+  useEffect(() => 
+  {
+    axios.get("https://12f24066b6f6.ngrok.io/cocktails/alldrinks")
+        .then(res => setDrinkCollection(res.data))
+        .catch(err => console.log(err));
+  }, [collectionOfDrinks]);
+
+  function displayDrinks()
+  {
+    return collectionOfDrinks.map(item => 
+          {
+            return(
+              <Card>
+                <Card.Cover source={{ uri: item.imageUrl}} />
+                <Text>Drink Name: {item.drinkName}</Text>
+                <Text>Milliters: {item.milliliter}</Text>
+                <Text>Alcohol %: {item.percentageOfAlcohol}</Text>
+                <Text>Price: {item.price}</Text>
+                <Text></Text>
+              </Card>
+            )
+          })
+  }
   return (
     <>
-      <View>
-        <Text>Hello World!</Text>
-      </View>
+    <SafeAreaView>
+      <ScrollView >
+        {displayDrinks()}
+      </ScrollView >
+    </SafeAreaView>
+     
     </>
   );
 };
 
 const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
-  },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
-  body: {
-    backgroundColor: Colors.white,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
+  image: 
+  {
+    width: 335,
+    height: 300,
+    borderColor: 'black',
+    borderWidth: 1,
+    marginHorizontal:3,
+  }
 });
 
 export default App;
