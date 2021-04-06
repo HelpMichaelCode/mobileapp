@@ -24,7 +24,7 @@ const App: () => React$Node = () => {
 
   useEffect(() => 
   {
-    axios.get("https://12f24066b6f6.ngrok.io/cocktails/alldrinks")
+    axios.get("https://d65ffa3d707d.ngrok.io/cocktails/alldrinks")
         .then(res => setDrinkCollection(res.data))
         .catch(err => console.log(err));
   }, [collectionOfDrinks]);
@@ -35,11 +35,13 @@ const App: () => React$Node = () => {
           {
             return(
               <Card>
-                <Card.Cover source={{ uri: item.imageUrl}} />
-                <Text>Drink Name: {item.drinkName}</Text>
-                <Text>Milliters: {item.milliliter}</Text>
-                <Text>Alcohol %: {item.percentageOfAlcohol}</Text>
-                <Text>Price: {item.price}</Text>
+                <Title style={styles.titleStyle}><Text>{item.drinkName}</Text></Title>
+                <Card.Cover source={{ uri: item.imageUrl}} style={styles.image} />
+                <Card.Content>
+                  <Title style={styles.contentStyle}>Milliters: {item.milliliter}ml</Title>
+                  <Title style={styles.contentStyle}>Alcohol: {item.percentageOfAlcohol}%</Title>
+                  <Title style={styles.contentStyle}>Price: €{item.price}</Title>
+                </Card.Content>
                 <Text></Text>
               </Card>
             )
@@ -60,11 +62,22 @@ const App: () => React$Node = () => {
 const styles = StyleSheet.create({
   image: 
   {
-    width: 335,
+    width: 350,
     height: 300,
-    borderColor: 'black',
-    borderWidth: 1,
-    marginHorizontal:3,
+    marginLeft: 5,
+  },
+  titleStyle : 
+  {
+    fontWeight: 'bold',
+    fontFamily: 'sans-serif-light',
+    fontSize: 25,
+    textAlign: 'center'
+  },
+  contentStyle: 
+  {
+    fontWeight: 'bold',
+    fontFamily: 'sans-serif-light',
+    fontSize: 21,
   }
 });
 
