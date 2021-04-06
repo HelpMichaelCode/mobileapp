@@ -7,27 +7,44 @@
  */
 
 import React, {useEffect, useState} from 'react';
-import {Card, Title, Headline, Snackbar } from 'react-native-paper';
+import {Card, Title } from 'react-native-paper';
 import axios from 'axios';
 import {
   StyleSheet,
-  View,
   Text,
-  FlatList,
-  Image,
   ScrollView,
   SafeAreaView,
+  TouchableOpacity,
+  TextInput
 } from 'react-native';
 
 const App: () => React$Node = () => {
   const [collectionOfDrinks, setDrinkCollection] = useState([]);
+  const [text, setText] = useState('');
 
   useEffect(() => 
   {
-    axios.get("https://d65ffa3d707d.ngrok.io/cocktails/alldrinks")
+    axios.get("https://e66f32be20ec.ngrok.io/cocktails/alldrinks")
         .then(res => setDrinkCollection(res.data))
         .catch(err => console.log(err));
   }, [collectionOfDrinks]);
+
+  // Might be a bit tricky
+  // function searchDocktail()
+  // {
+  //   return
+  //   (
+
+  //   )
+  // }
+  function deleteEndpoint(drinkId)
+  {
+    console.log(drinkId);
+    var value = parseInt(drinkId);
+    axios.delete(`https://e66f32be20ec.ngrok.io/cocktails?ID=${value}`)
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
+  }
 
   function displayDrinks()
   {
@@ -41,6 +58,18 @@ const App: () => React$Node = () => {
                   <Title style={styles.contentStyle}>Milliters: {item.milliliter}ml</Title>
                   <Title style={styles.contentStyle}>Alcohol: {item.percentageOfAlcohol}%</Title>
                   <Title style={styles.contentStyle}>Price: €{item.price}</Title>
+                  <Card.Actions>
+                  <TouchableOpacity 
+                    style={styles.buttonStyleEdit}
+                   >
+                    <Text style={{fontFamily: 'sans-serif-light', fontSize: 15}}>Edit</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity 
+                    style={styles.buttonStyleDelete}
+                    onPress={() => deleteEndpoint(item.id)}>
+                    <Text style={{fontFamily:'sans-serif-light', fontSize: 15}}>Delete</Text>
+                  </TouchableOpacity>
+                </Card.Actions>
                 </Card.Content>
                 <Text></Text>
               </Card>
@@ -52,6 +81,12 @@ const App: () => React$Node = () => {
     <SafeAreaView>
       <ScrollView>
         <Text style={styles.mainHeading}>Cocktails</Text>
+        <TextInput
+          style={styles.input}
+          value={text}
+          onChangeText={text => setText(text)}
+          placeholder="Search Cocktail"
+        />
         {displayDrinks()}
       </ScrollView>
     </SafeAreaView>
@@ -61,6 +96,34 @@ const App: () => React$Node = () => {
 };
 
 const styles = StyleSheet.create({
+  input: 
+  {
+    width: 250,
+    borderRadius: 10,
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+  },
+  buttonStyleEdit: 
+  {
+    backgroundColor: '#ff4e50',
+    alignItems: 'center',
+    width: 50,
+    paddingBottom: 10,
+    paddingTop: 10,
+    marginLeft: 210,
+    borderRadius: 3,
+  },
+  buttonStyleDelete: 
+  {
+    backgroundColor: '#ff4e50',
+    alignItems: 'center',
+    width: 60,
+    paddingBottom: 10,
+    paddingTop: 10,
+    marginLeft: 10,
+    borderRadius: 3,
+  },
   mainHeading: 
   {
     fontSize: 35,
