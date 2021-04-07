@@ -15,37 +15,111 @@ import {
   ScrollView,
   SafeAreaView,
   TouchableOpacity,
-  TextInput
+  TextInput,
+  FlatList,
 } from 'react-native';
 
 const App: () => React$Node = () => {
   const [collectionOfDrinks, setDrinkCollection] = useState([]);
+  const [collectionOfDrinksFull, setDrinkCollectionFull] = useState([]);
+  const [singleDrink, setSingleDrink] = useState([]);
   const [text, setText] = useState('');
+  const [searched, setSearched] = useState(false);
 
+  // Retrievs all drinks 
   useEffect(() => 
   {
-    axios.get("https://e66f32be20ec.ngrok.io/cocktails/alldrinks")
-        .then(res => setDrinkCollection(res.data))
+    axios.get("https://8f88f3bb5ce6.ngrok.io/cocktails/alldrinks")
+        .then(res => {setDrinkCollectionFull(res.data), setDrinkCollection(res.data)})
         .catch(err => console.log(err));
-  }, [collectionOfDrinks]);
+  }, []);
 
-  // Might be a bit tricky
-  // function searchDocktail()
+  // Search for a specific drink
+  // function searchDocktail(value)
   // {
-  //   return
-  //   (
-
-  //   )
+  //   console.log(value);
+  //   axios.get(`https://8f88f3bb5ce6.ngrok.io/cocktails/filter?name=${value}`)
+  //     .then(res => setSingleDrink(res.data))
+  //     .catch(err => console.log(err));
+  //     setSearched(true);
   // }
+
+  function searchFilter(text)
+  {
+    setText(text);
+    const newData = collectionOfDrinksFull.filter(item => 
+      {
+        const itemData = item.drinkName.toUpperCase();
+        const textData = text.toUpperCase();
+        return itemData.indexOf(textData) > -1;
+      });
+      // Can try include function here, maybe.
+      setDrinkCollection(newData);
+  }
+  // Delets a specfici drink
   function deleteEndpoint(drinkId)
   {
-    console.log(drinkId);
     var value = parseInt(drinkId);
-    axios.delete(`https://e66f32be20ec.ngrok.io/cocktails?ID=${value}`)
+    axios.delete(`https://8f88f3bb5ce6.ngrok.io/cocktails?ID=${value}`)
       .then(res => console.log(res))
       .catch(err => console.log(err));
   }
 
+  function renderItem({item})
+  {
+    return(
+      <Card>
+        <Title style={styles.titleStyle}><Text>{item.drinkName}</Text></Title>
+        <Card.Cover source={{ uri: item.imageUrl}} style={styles.image} />
+        <Card.Content>
+          <Title style={styles.contentStyle}>Milliters: {item.milliliter}ml</Title>
+          <Title style={styles.contentStyle}>Alcohol: {item.percentageOfAlcohol}%</Title>
+          <Title style={styles.contentStyle}>Price: €{item.price}</Title>
+          <Card.Actions>
+          <TouchableOpacity 
+            style={styles.buttonStyleEdit}
+           >
+            <Text style={{fontFamily: 'sans-serif-light', fontSize: 15}}>Edit</Text>
+          </TouchableOpacity>
+          <TouchableOpacity 
+            style={styles.buttonStyleDelete}
+            onPress={() => deleteEndpoint(item.id)}>
+            <Text style={{fontFamily:'sans-serif-light', fontSize: 15}}>Delete</Text>
+          </TouchableOpacity>
+        </Card.Actions>
+        </Card.Content>
+        <Text></Text>
+      </Card>
+    );
+  }
+  // function displaySingleDrink()
+  // {
+  //   return(
+  //     <Card>
+  //       <Title style={styles.titleStyle}><Text>{singleDrink[0].drinkName}</Text></Title>
+  //       <Card.Cover source={{ uri: singleDrink[0].imageUrl}} style={styles.image} />
+  //       <Card.Content>
+  //         <Title style={styles.contentStyle}>Milliters: {singleDrink[0].milliliter}ml</Title>
+  //         <Title style={styles.contentStyle}>Alcohol: {singleDrink[0].percentageOfAlcohol}%</Title>
+  //         <Title style={styles.contentStyle}>Price: €{singleDrink[0].price}</Title>
+  //         <Card.Actions>
+  //         <TouchableOpacity 
+  //           style={styles.buttonStyleEdit}
+  //          >
+  //           <Text style={{fontFamily: 'sans-serif-light', fontSize: 15}}>Edit</Text>
+  //         </TouchableOpacity>
+  //         <TouchableOpacity 
+  //           style={styles.buttonStyleDelete}
+  //           onPress={() => deleteEndpoint(singleDrink[0].id)}>
+  //           <Text style={{fontFamily:'sans-serif-light', fontSize: 15}}>Delete</Text>
+  //         </TouchableOpacity>
+  //       </Card.Actions>
+  //       </Card.Content>
+  //       <Text></Text>
+  //     </Card>
+  //   )
+  // }
+  // function component that returns a list of drinks data
   function displayDrinks()
   {
     return collectionOfDrinks.map(item => 
@@ -76,6 +150,7 @@ const App: () => React$Node = () => {
             )
           })
   }
+
   return (
     <>
     <SafeAreaView>
@@ -84,10 +159,19 @@ const App: () => React$Node = () => {
         <TextInput
           style={styles.input}
           value={text}
-          onChangeText={text => setText(text)}
+          onChangeText={(text) => searchFilter(text)}
           placeholder="Search Cocktail"
         />
-        {displayDrinks()}
+          {/* <TouchableOpacity 
+            style={styles.buttonStyleSearch}
+            onPress={() => searchDocktail(text)}>
+            <Text style={{fontFamily:'sans-serif-light', fontSize: 15}}>Search</Text>
+          </TouchableOpacity> */}
+        <FlatList
+          data={collectionOfDrinks}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id.toString()}
+          />
       </ScrollView>
     </SafeAreaView>
      
@@ -96,10 +180,20 @@ const App: () => React$Node = () => {
 };
 
 const styles = StyleSheet.create({
+  buttonStyleSearch: 
+  {
+    backgroundColor: '#ff4e50',
+    alignItems: 'center',
+    width: 60,
+    paddingBottom: 10,
+    paddingTop: 10,
+    marginLeft: 10,
+    borderRadius: 3,
+  },
   input: 
   {
     width: 250,
-    borderRadius: 10,
+    borderRadius: 5,
     height: 40,
     margin: 12,
     borderWidth: 1,
@@ -139,6 +233,7 @@ const styles = StyleSheet.create({
     width: 350,
     height: 300,
     marginLeft: 5,
+    borderRadius: 10,
   },
   titleStyle : 
   {
