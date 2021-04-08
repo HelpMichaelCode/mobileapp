@@ -7,7 +7,7 @@
  */
 
 import React, {useEffect, useState} from 'react';
-import {Card, Title } from 'react-native-paper';
+import {Card, Title, Dialog, Portal, Provider } from 'react-native-paper';
 import axios from 'axios';
 import {
   StyleSheet,
@@ -17,17 +17,27 @@ import {
   TouchableOpacity,
   TextInput,
   FlatList,
+  Modal,
+  Alert,
+  View,
+  Pressable,
 } from 'react-native';
 
-const App: () => React$Node = () => {
+function App() {
   const [collectionOfDrinks, setDrinkCollection] = useState([]);
   const [collectionOfDrinksFull, setDrinkCollectionFull] = useState([]);
   const [text, setText] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
+  const [drinkInput, setDrinkInput] = useState('');
+  const [millilitersInput, setMillilitersInput] = useState('');
+  const [alcoholInput, setAlcoholInput] = useState('');
+  const [priceInput, setPriceInput] = useState('');
 
+  var ngrokUrl = "https://23b3da0707d2.ngrok.io";
   // Retrievs all drinks 
   useEffect(() => 
   {
-    axios.get("https://8f88f3bb5ce6.ngrok.io/cocktails/alldrinks")
+    axios.get(`${ngrokUrl}/cocktails/alldrinks`)
         .then(res => {setDrinkCollectionFull(res.data), setDrinkCollection(res.data)})
         .catch(err => console.log(err));
   }, []);
@@ -35,20 +45,21 @@ const App: () => React$Node = () => {
   function searchFilter(text)
   {
     setText(text);
+    // Can try include function here, maybe.
     const newData = collectionOfDrinksFull.filter(item => 
       {
         const itemData = item.drinkName.toUpperCase();
         const textData = text.toUpperCase();
         return itemData.indexOf(textData) > -1;
       });
-      // Can try include function here, maybe.
+
       setDrinkCollection(newData);
   }
-  // Delets a specfici drink
+  // Delete a specific drink
   function deleteEndpoint(drinkId)
   {
     var value = parseInt(drinkId);
-    axios.delete(`https://8f88f3bb5ce6.ngrok.io/cocktails?ID=${value}`)
+    axios.delete(`${ngrokUrl}/cocktails?ID=${value}`)
       .then(res => console.log(res))
       .catch(err => console.log(err));
   }
@@ -74,18 +85,69 @@ const App: () => React$Node = () => {
             onPress={() => deleteEndpoint(item.id)}>
             <Text style={{fontFamily:'sans-serif-light', fontSize: 15}}>Delete</Text>
           </TouchableOpacity>
+          <TouchableOpacity 
+            style={styles.buttonStyleAddDrink}
+            onPress={() => setModalVisible(true)}>
+            <Text style={{fontFamily:'sans-serif-light', fontSize: 15}}>Add Drink</Text>
+          </TouchableOpacity>
         </Card.Actions>
         </Card.Content>
         <Text></Text>
       </Card>
     );
   }
-
   return (
     <>
     <SafeAreaView>
       <ScrollView>
         <Text style={styles.mainHeading}>Cocktails</Text>
+        <View style={styles.centeredView}>
+      <Modal
+        animationType="slide"
+        transparent={false}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+              <TextInput
+              style={styles.modalInput}
+              value={drinkInput}
+              onChangeText={(drinkInput) => setDrinkInput(drinkInput)}
+              placeholder="Enter cocktail name"
+            />
+            <TextInput
+              style={styles.modalInput}
+              value={millilitersInput}
+              onChangeText={(millilitersInput) => setMillilitersInput(millilitersInput)}
+              placeholder="Enter milliliters"
+            />
+            <TextInput
+              style={styles.modalInput}
+              value={alcoholInput}
+              onChangeText={(alcoholInput) => setAlcoholInput(alcoholInput)}
+              placeholder="Enter percentage of alcohol"
+            />
+            <TextInput
+              style={styles.modalInput}
+              value={priceInput}
+              onChangeText={(priceInput) => setPriceInput(priceInput)}
+              placeholder="Enter price"
+            />
+            <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => setModalVisible(!modalVisible)}
+            >
+              <Text style={styles.textStyle}>Add New Drink</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
+
+    </View>
         <TextInput
           style={styles.input}
           value={text}
@@ -99,11 +161,22 @@ const App: () => React$Node = () => {
           />
       </ScrollView>
     </SafeAreaView>
+  
     </>
   );
 };
 
 const styles = StyleSheet.create({
+  buttonStyleAddDrink: 
+  {
+    backgroundColor: '#ff4e50',
+    alignItems: 'center',
+    width: 60,
+    paddingBottom: 10,
+    paddingTop: 10,
+    marginLeft: 10,
+    borderRadius: 3,
+  },
   buttonStyleSearch: 
   {
     backgroundColor: '#ff4e50',
@@ -122,6 +195,14 @@ const styles = StyleSheet.create({
     margin: 12,
     borderWidth: 1,
   },
+  modalInput:
+  {
+    width: 250,
+    borderRadius: 5,
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+  },
   buttonStyleEdit: 
   {
     backgroundColor: '#ff4e50',
@@ -129,7 +210,7 @@ const styles = StyleSheet.create({
     width: 50,
     paddingBottom: 10,
     paddingTop: 10,
-    marginLeft: 210,
+    marginLeft: 137,
     borderRadius: 3,
   },
   buttonStyleDelete: 
@@ -171,7 +252,39 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontFamily: 'sans-serif-light',
     fontSize: 21,
-  }
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
+  button: {
+    width: 100,
+    borderRadius: 3,
+    padding: 10,
+  },
+  buttonClose: {
+    backgroundColor: "#ff4e50",
+  },
+  textStyle: {
+    color: "black",
+    fontFamily: 'sans-serif-light',
+    textAlign: "center"
+  },
 });
 
 export default App;
