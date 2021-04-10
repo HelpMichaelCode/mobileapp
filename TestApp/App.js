@@ -39,7 +39,7 @@ function App() {
     axios.get(`${ngrokUrl}/cocktails/alldrinks`)
         .then(res => {setDrinkCollectionFull(res.data), setDrinkCollection(res.data)})
         .catch(err => console.log(err));
-  }, []);
+  }, [modalVisible]);
   
   // Saerch filter for cocktail collection
   function searchFilter(text)
@@ -60,21 +60,23 @@ function App() {
   {
     var value = parseInt(drinkId);
     axios.delete(`${ngrokUrl}/cocktails?ID=${value}`)
-      .then(res => console.log(res))
+      .then(res => {setDrinkCollection(collectionOfDrinks.filter((drink) => drink.id != value))})
       .catch(err => console.log(err));
   }
-
+ 
   function addNewDrink()
   {
+    const newDrink = 
+    {
+      drinkName: drinkInput,
+      percentageOfAlcohol: alcoholInput,
+      milliliter: millilitersInput,
+      price: priceInput,
+      imageUrl: imageInput
+    };
     axios
-      .post(`${ngrokUrl}/cocktails/add`, {
-          drinkName: drinkInput,
-          percentageOfAlcohol: alcoholInput,
-          milliliter: millilitersInput,
-          price: priceInput,
-          imageUrl: imageInput
-      })
-      .then(res => console.log(res))
+      .post(`${ngrokUrl}/cocktails/add`, newDrink)
+      .then(res => setDrinkCollection([...collectionOfDrinks], newDrink))
       .catch(err => console.log(err));
   }
   function renderItem({item})
@@ -174,6 +176,8 @@ function App() {
           data={collectionOfDrinks}
           renderItem={renderItem}
           keyExtractor={(item) => item.id.toString()}
+          windowSize={10}
+          maxToRenderPerBatch={3}
           />
     </>
   );
