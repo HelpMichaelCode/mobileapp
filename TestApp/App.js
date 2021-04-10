@@ -7,13 +7,11 @@
  */
 
 import React, {useEffect, useState} from 'react';
-import {Card, Title, Dialog, Portal, Provider } from 'react-native-paper';
+import {Card, Title } from 'react-native-paper';
 import axios from 'axios';
 import {
   StyleSheet,
   Text,
-  ScrollView,
-  SafeAreaView,
   TouchableOpacity,
   TextInput,
   FlatList,
@@ -32,8 +30,9 @@ function App() {
   const [millilitersInput, setMillilitersInput] = useState('');
   const [alcoholInput, setAlcoholInput] = useState('');
   const [priceInput, setPriceInput] = useState('');
+  const [imageInput, setImageInput] = useState('');
 
-  var ngrokUrl = "https://23b3da0707d2.ngrok.io";
+  var ngrokUrl = "https://ed7c3f6e02bd.ngrok.io";
   // Retrievs all drinks 
   useEffect(() => 
   {
@@ -41,7 +40,8 @@ function App() {
         .then(res => {setDrinkCollectionFull(res.data), setDrinkCollection(res.data)})
         .catch(err => console.log(err));
   }, []);
-
+  
+  // Saerch filter for cocktail collection
   function searchFilter(text)
   {
     setText(text);
@@ -64,6 +64,19 @@ function App() {
       .catch(err => console.log(err));
   }
 
+  function addNewDrink()
+  {
+    axios
+      .post(`${ngrokUrl}/cocktails/add`, {
+          drinkName: drinkInput,
+          percentageOfAlcohol: alcoholInput,
+          milliliter: millilitersInput,
+          price: priceInput,
+          imageUrl: imageInput
+      })
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
+  }
   function renderItem({item})
   {
     return(
@@ -98,10 +111,8 @@ function App() {
   }
   return (
     <>
-    <SafeAreaView>
-      <ScrollView>
         <Text style={styles.mainHeading}>Cocktails</Text>
-        <View style={styles.centeredView}>
+      <View style={styles.centeredView}>
       <Modal
         animationType="slide"
         transparent={false}
@@ -137,16 +148,21 @@ function App() {
               onChangeText={(priceInput) => setPriceInput(priceInput)}
               placeholder="Enter price"
             />
+            <TextInput
+              style={styles.modalInput}
+              value={imageInput}
+              onChangeText={(imageInput) => setImageInput(imageInput)}
+              placeholder="Image url"
+            />
             <Pressable
               style={[styles.button, styles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}
+              onPress={() => {setModalVisible(!modalVisible); addNewDrink()}}
             >
               <Text style={styles.textStyle}>Add New Drink</Text>
             </Pressable>
           </View>
         </View>
       </Modal>
-
     </View>
         <TextInput
           style={styles.input}
@@ -159,9 +175,6 @@ function App() {
           renderItem={renderItem}
           keyExtractor={(item) => item.id.toString()}
           />
-      </ScrollView>
-    </SafeAreaView>
-  
     </>
   );
 };
