@@ -30,7 +30,6 @@ function App() {
   const [millilitersInput, setMillilitersInput] = useState('');
   const [alcoholInput, setAlcoholInput] = useState('');
   const [priceInput, setPriceInput] = useState('');
-  const [imageInput, setImageInput] = useState('');
 
   var ngrokUrl = "https://7a8d668fadee.ngrok.io";
   // Retrievs all drinks 
@@ -86,7 +85,7 @@ function App() {
       percentageOfAlcohol: alcoholInput,
       milliliter: millilitersInput,
       price: priceInput,
-      imageUrl: imageInput
+      imageUrl: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKgAAAEsCAMAAABgwwj8AAAAe1BMVEX98fAAAAD/9fT/9/b/+fjWzMv//Pu8s7LLwcDl2tn/+vj47OvHvr377+7///46ODiYkZHe1NPq394aGRizq6pJRkZaVlWKg4Oak5Lx5eQrKSl/eXliXV2poaCMhYVnYmEgHx8SEREyMC9STk0NDAzJv76tpKRybWxCPz/Mj9BqAAACuElEQVR4nO3b226qQBhAYf6ZAaQgZVBRWlGr1fb9n3DP4CG7tTvxoslA9vqS4lS4WKWcIhhFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD8kwod8BhtJzp0wyPURGQzhlK9aVYLE7riEfVOtknoiIeYVtIxrFKtngqptfpqeFut7uRHeeiw79Rc5tbutln8F9vINHTYHbMSm1iJ6/Tm+Cn1AM8CiSstO5neNtNy6bbZ0FU/6UsPzfUYlSwlG2TnuTSS7nyMGnCni6skiyXz2+WgO/vSevmmBt/Zl7Yvr8ZUA+90pR8vbZwUYgfe6U5RsybtZD78s76KJVrtx3AdlRw6OQ7whHTPXewP/x/vmc16JKHNavC7fM88z8cSmo5iXyL01xH628YTuh9JaCLjOOArK89juHhSyWEt6XBLjYmU8exhZyZS5eYsdNd3Vj5d3mw2E5HZ7sVP3xa72ex9aJ895UWs2uPki9hPQofdUcr/3AvdBQAAAAAAAADA/0g7/UC5wfnTen1+/zZSl9/8vZ1gt/Paqqq6XPvHctwo9R3txrqyU2ei3I9UVSjTrdwMM3l9nYd6OjeT50YkVpGuZLuWxvi3ChU9HWTuHyF3M2RZbsSqSBWybiTUvdxMjqVeiPahSZlKew11+VnuR0aqVPw3M9wSWdmGyTxX6UJqn6HNyj93fQldH3aX0IU0pV/WiuyDPa/nqrQ5uRXpQp1O30KbqWz70Hf32vcZfdzKKdDulEk6jeVgfKg99Q/iXkPLo5zX6Ee59puE+ehULstAodavxyb3X2gRk3y+RdfQxeIp2Vx2JpPLXvklRN7rMJ1Rbq1t++2udoeiNnbJuZ9EWeb/DL/v2DpS/QwzjeNw38z6ek9W3SbRTyPu3wIAAAAAAAAAAAAAAAAAAAAAAAAAgEH6A3KCHRvBxslPAAAAAElFTkSuQmCC' 
     };
     axios
       .post(`${ngrokUrl}/cocktails/add`, newDrink)
@@ -140,6 +139,15 @@ function App() {
                                       >
                                       <Text>Descending</Text>
                                       </TouchableOpacity>
+
+      <Text style={styles.mainHeading}>Cocktails</Text>
+      <TextInput
+          style={styles.input}
+          value={text}
+          onChangeText={(text) => searchFilter(text)}
+          placeholder="Search Cocktail"
+      />
+
       <View style={styles.centeredView}>
       <Modal
         animationType="slide"
@@ -176,12 +184,6 @@ function App() {
               onChangeText={(priceInput) => setPriceInput(priceInput)}
               placeholder="Enter price"
             />
-            <TextInput
-              style={styles.modalInput}
-              value={imageInput}
-              onChangeText={(imageInput) => setImageInput(imageInput)}
-              placeholder="Image url"
-            />
             <Pressable
               style={[styles.button, styles.buttonClose]}
               onPress={() => {setModalVisible(!modalVisible); addNewDrink()}}
@@ -192,12 +194,7 @@ function App() {
         </View>
       </Modal>
     </View>
-        <TextInput
-          style={styles.input}
-          value={text}
-          onChangeText={(text) => searchFilter(text)}
-          placeholder="Search Cocktail"
-        />
+     
         <FlatList
           data={collectionOfDrinks}
           renderItem={renderItem}
@@ -236,7 +233,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     height: 40,
     margin: 12,
-    borderWidth: 1,
+    borderWidth: 0.5,
   },
   modalInput:
   {
@@ -271,7 +268,6 @@ const styles = StyleSheet.create({
     fontSize: 35,
     fontFamily: 'sans-serif-light',
     textAlign: 'center',
-    marginBottom: 25,
     backgroundColor: '#ff4e50',
     paddingBottom: 10,
     paddingTop: 10,
