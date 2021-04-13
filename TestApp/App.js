@@ -32,7 +32,7 @@ function App() {
   const [priceInput, setPriceInput] = useState('');
   const [imageInput, setImageInput] = useState('');
 
-  var ngrokUrl = "https://2578453b33ae.ngrok.io";
+  var ngrokUrl = "https://7a8d668fadee.ngrok.io";
   // Retrievs all drinks 
   useEffect(() => 
   {
@@ -63,6 +63,20 @@ function App() {
       .then(res => {setDrinkCollection(collectionOfDrinks.filter((drink) => drink.id != value))})
       .catch(err => console.log(err));
   }
+
+  function ascendingOrder()
+  {
+    axios.get(`${ngrokUrl}/cocktails/ascending`)
+            .then(res => setDrinkCollection(res.data))
+            .catch(err => console.log(err));
+  }
+
+    function descendingOrder()
+    {
+      axios.get(`${ngrokUrl}/cocktails/descending`)
+              .then(res => setDrinkCollection(res.data))
+              .catch(err => console.log(err));
+    }
  
   function addNewDrink()
   {
@@ -114,6 +128,18 @@ function App() {
   return (
     <>
         <Text style={styles.mainHeading}>Cocktails</Text>
+         <TouchableOpacity
+                    style={styles.buttonStyleEdit}
+                    onPress = {()=>ascendingOrder()}
+                   >
+                   <Text>Ascending</Text>
+                   </TouchableOpacity>
+                            <TouchableOpacity
+                                       style={styles.buttonStyleEdit}
+                                       onPress = {()=>descendingOrder()}
+                                      >
+                                      <Text>Descending</Text>
+                                      </TouchableOpacity>
       <View style={styles.centeredView}>
       <Modal
         animationType="slide"
