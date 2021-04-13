@@ -32,7 +32,7 @@ function App() {
   const [priceInput, setPriceInput] = useState('');
   const [imageInput, setImageInput] = useState('');
 
-  var ngrokUrl = "https://ed7c3f6e02bd.ngrok.io";
+  var ngrokUrl = "https://2578453b33ae.ngrok.io";
   // Retrievs all drinks 
   useEffect(() => 
   {
