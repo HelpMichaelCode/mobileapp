@@ -5,16 +5,11 @@
  * @format
  * @flow strict-local
  */
-
-
 import Drinks from './components/drinks';
 import React from 'react';
 
 function App() {
-  return (
-    <Drinks />
-  );
-};
-
+  return <Drinks />;
+}
 
 export default App;

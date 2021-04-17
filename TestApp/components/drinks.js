@@ -57,12 +57,12 @@ function CollectionOfDrinks() {
   }
   // Delete a specific drink
   function deleteEndpoint(drinkId) {
-    var value = parseInt(drinkId);
+    var value = Number(drinkId);
     axios
       .delete(`${ngrokUrl}/cocktails?ID=${value}`)
       .then((res) => {
         setDrinkCollection(
-          collectionOfDrinks.filter((drink) => drink.id != value),
+          collectionOfDrinks.filter((drink) => drink.id !== value),
         );
       })
       .catch((err) => console.log(err));
@@ -145,20 +145,15 @@ function CollectionOfDrinks() {
                 setPopulateEditModal({...item});
                 setModalVisibleUpdate(true);
               }}>
-              <Text style={{fontFamily: 'sans-serif-light', fontSize: 15}}>
-                Edit
-              </Text>
+              <Text style={{}}>Edit</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.buttonStyleDelete}
               onPress={() => deleteEndpoint(item.id)}>
-              <Text style={{fontFamily: 'sans-serif-light', fontSize: 15}}>
-                Delete
-              </Text>
+              <Text style={{}}>Delete</Text>
             </TouchableOpacity>
           </Card.Actions>
         </Card.Content>
-        <Text></Text>
       </Card>
     );
   }
@@ -175,7 +170,7 @@ function CollectionOfDrinks() {
         onPress={() => descendingOrder()}>
         <Text>Descending</Text>
       </TouchableOpacity>
-      <View style={{flexDirection: 'row', height: 60}}>
+      <View style={styles.displayInRows}>
         <TextInput
           style={styles.input}
           value={text}
@@ -185,9 +180,7 @@ function CollectionOfDrinks() {
         <TouchableOpacity
           style={styles.buttonStyleAddDrink}
           onPress={() => setModalVisibleNewDrink(true)}>
-          <Text style={{fontFamily: 'sans-serif-light', fontSize: 15}}>
-            Add Drink
-          </Text>
+          <Text>Add Drink</Text>
         </TouchableOpacity>
       </View>
 
@@ -323,7 +316,13 @@ function CollectionOfDrinks() {
 }
 
 const styles = StyleSheet.create({
+  displayInRows: {
+    flexDirection: 'row',
+    height: 60,
+  },
   buttonStyleAddDrink: {
+    fontFamily: 'sans-serif-light',
+    fontSize: 15,
     backgroundColor: '#ff4e50',
     alignItems: 'center',
     width: 60,
@@ -355,6 +354,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   buttonStyleEdit: {
+    fontFamily: 'sans-serif-light',
+    fontSize: 15,
     backgroundColor: '#ff4e50',
     alignItems: 'center',
     width: 50,
@@ -364,6 +365,8 @@ const styles = StyleSheet.create({
     borderRadius: 3,
   },
   buttonStyleDelete: {
+    fontFamily: 'sans-serif-light',
+    fontSize: 15,
     backgroundColor: '#ff4e50',
     alignItems: 'center',
     width: 60,
