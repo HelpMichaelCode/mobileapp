@@ -1,0 +1,456 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Drinks screen rendering properly! 1`] = `
+Array [
+  <Text
+    style={
+      Object {
+        "backgroundColor": "#ff4e50",
+        "fontFamily": "sans-serif-light",
+        "fontSize": 35,
+        "paddingBottom": 10,
+        "paddingTop": 10,
+        "textAlign": "center",
+      }
+    }
+  >
+    Cocktails
+  </Text>,
+  <View
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#ff4e50",
+        "borderRadius": 3,
+        "marginLeft": 210,
+        "opacity": 1,
+        "paddingBottom": 10,
+        "paddingTop": 10,
+        "width": 50,
+      }
+    }
+  >
+    <Text>
+      Ascending
+    </Text>
+  </View>,
+  <View
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#ff4e50",
+        "borderRadius": 3,
+        "marginLeft": 210,
+        "opacity": 1,
+        "paddingBottom": 10,
+        "paddingTop": 10,
+        "width": 50,
+      }
+    }
+  >
+    <Text>
+      Descending
+    </Text>
+  </View>,
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "height": 60,
+      }
+    }
+  >
+    <TextInput
+      allowFontScaling={true}
+      onChangeText={[Function]}
+      placeholder="Search Cocktail"
+      rejectResponderTermination={true}
+      style={
+        Object {
+          "borderRadius": 5,
+          "borderWidth": 0.5,
+          "height": 40,
+          "margin": 12,
+          "width": 250,
+        }
+      }
+      underlineColorAndroid="transparent"
+      value=""
+    />
+    <View
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#ff4e50",
+          "borderRadius": 3,
+          "marginLeft": 10,
+          "opacity": 1,
+          "paddingTop": 18,
+          "width": 60,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "fontFamily": "sans-serif-light",
+            "fontSize": 15,
+          }
+        }
+      >
+        Add Drink
+      </Text>
+    </View>
+  </View>,
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "justifyContent": "center",
+      }
+    }
+  >
+    <Modal
+      animationType="slide"
+      hardwareAccelerated={false}
+      onRequestClose={[Function]}
+      transparent={false}
+      visible={false}
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flex": 1,
+            "justifyContent": "center",
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "white",
+              "elevation": 5,
+              "margin": 20,
+              "padding": 35,
+              "shadowColor": "#000",
+              "shadowOffset": Object {
+                "height": 2,
+                "width": 0,
+              },
+              "shadowOpacity": 0.25,
+              "shadowRadius": 4,
+            }
+          }
+        >
+          <TextInput
+            allowFontScaling={true}
+            onChangeText={[Function]}
+            placeholder="Enter cocktail name"
+            rejectResponderTermination={true}
+            style={
+              Object {
+                "borderRadius": 5,
+                "borderWidth": 1,
+                "height": 40,
+                "margin": 12,
+                "width": 250,
+              }
+            }
+            underlineColorAndroid="transparent"
+            value=""
+          />
+          <TextInput
+            allowFontScaling={true}
+            onChangeText={[Function]}
+            placeholder="Enter milliliters"
+            rejectResponderTermination={true}
+            style={
+              Object {
+                "borderRadius": 5,
+                "borderWidth": 1,
+                "height": 40,
+                "margin": 12,
+                "width": 250,
+              }
+            }
+            underlineColorAndroid="transparent"
+            value=""
+          />
+          <TextInput
+            allowFontScaling={true}
+            onChangeText={[Function]}
+            placeholder="Enter percentage of alcohol"
+            rejectResponderTermination={true}
+            style={
+              Object {
+                "borderRadius": 5,
+                "borderWidth": 1,
+                "height": 40,
+                "margin": 12,
+                "width": 250,
+              }
+            }
+            underlineColorAndroid="transparent"
+            value=""
+          />
+          <TextInput
+            allowFontScaling={true}
+            onChangeText={[Function]}
+            placeholder="Enter price"
+            rejectResponderTermination={true}
+            style={
+              Object {
+                "borderRadius": 5,
+                "borderWidth": 1,
+                "height": 40,
+                "margin": 12,
+                "width": 250,
+              }
+            }
+            underlineColorAndroid="transparent"
+            value=""
+          />
+          <View
+            accessible={true}
+            focusable={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Array [
+                Object {
+                  "borderRadius": 3,
+                  "padding": 10,
+                  "width": 100,
+                },
+                Object {
+                  "backgroundColor": "#ff4e50",
+                },
+              ]
+            }
+          >
+            <Text
+              style={
+                Object {
+                  "color": "black",
+                  "fontFamily": "sans-serif-light",
+                  "textAlign": "center",
+                }
+              }
+            >
+              Add New Drink
+            </Text>
+          </View>
+        </View>
+      </View>
+    </Modal>
+    <Modal
+      animationType="slide"
+      hardwareAccelerated={false}
+      onRequestClose={[Function]}
+      transparent={false}
+      visible={false}
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flex": 1,
+            "justifyContent": "center",
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "white",
+              "elevation": 5,
+              "margin": 20,
+              "padding": 35,
+              "shadowColor": "#000",
+              "shadowOffset": Object {
+                "height": 2,
+                "width": 0,
+              },
+              "shadowOpacity": 0.25,
+              "shadowRadius": 4,
+            }
+          }
+        >
+          <TextInput
+            allowFontScaling={true}
+            onChangeText={[Function]}
+            placeholder="Enter cocktail name"
+            rejectResponderTermination={true}
+            style={
+              Object {
+                "borderRadius": 5,
+                "borderWidth": 1,
+                "height": 40,
+                "margin": 12,
+                "width": 250,
+              }
+            }
+            underlineColorAndroid="transparent"
+            value=""
+          />
+          <TextInput
+            allowFontScaling={true}
+            keyboardType="numeric"
+            onChangeText={[Function]}
+            placeholder="Enter milliliters"
+            rejectResponderTermination={true}
+            style={
+              Object {
+                "borderRadius": 5,
+                "borderWidth": 1,
+                "height": 40,
+                "margin": 12,
+                "width": 250,
+              }
+            }
+            underlineColorAndroid="transparent"
+            value="0"
+          />
+          <TextInput
+            allowFontScaling={true}
+            keyboardType="numeric"
+            onChangeText={[Function]}
+            placeholder="Enter percentage of alcohol"
+            rejectResponderTermination={true}
+            style={
+              Object {
+                "borderRadius": 5,
+                "borderWidth": 1,
+                "height": 40,
+                "margin": 12,
+                "width": 250,
+              }
+            }
+            underlineColorAndroid="transparent"
+            value="0"
+          />
+          <TextInput
+            allowFontScaling={true}
+            keyboardType="numeric"
+            onChangeText={[Function]}
+            placeholder="Enter price"
+            rejectResponderTermination={true}
+            style={
+              Object {
+                "borderRadius": 5,
+                "borderWidth": 1,
+                "height": 40,
+                "margin": 12,
+                "width": 250,
+              }
+            }
+            underlineColorAndroid="transparent"
+            value="0"
+          />
+          <View
+            accessible={true}
+            focusable={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Array [
+                Object {
+                  "borderRadius": 3,
+                  "padding": 10,
+                  "width": 100,
+                },
+                Object {
+                  "backgroundColor": "#ff4e50",
+                },
+              ]
+            }
+          >
+            <Text
+              style={
+                Object {
+                  "color": "black",
+                  "fontFamily": "sans-serif-light",
+                  "textAlign": "center",
+                }
+              }
+            >
+              Update Drink
+            </Text>
+          </View>
+        </View>
+      </View>
+    </Modal>
+  </View>,
+  <RCTScrollView
+    data={Array []}
+    disableVirtualization={false}
+    getItem={[Function]}
+    getItemCount={[Function]}
+    horizontal={false}
+    initialNumToRender={10}
+    keyExtractor={[Function]}
+    maxToRenderPerBatch={3}
+    onContentSizeChange={[Function]}
+    onEndReachedThreshold={2}
+    onLayout={[Function]}
+    onMomentumScrollEnd={[Function]}
+    onScroll={[Function]}
+    onScrollBeginDrag={[Function]}
+    onScrollEndDrag={[Function]}
+    removeClippedSubviews={false}
+    renderItem={[Function]}
+    scrollEventThrottle={50}
+    stickyHeaderIndices={Array []}
+    updateCellsBatchingPeriod={50}
+    viewabilityConfigCallbackPairs={Array []}
+    windowSize={10}
+  >
+    <View />
+  </RCTScrollView>,
+]
+`;
