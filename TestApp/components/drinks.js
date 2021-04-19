@@ -32,7 +32,7 @@ function CollectionOfDrinks() {
     imageUrl: '',
   });
 
-  var ngrokUrl = 'https://a1a4f740a7cb.ngrok.io';
+  var ngrokUrl = 'https://cocktailbackend.azurewebsites.net/';
   // Retrievs all drinks
   useEffect(() => {
     axios
@@ -81,6 +81,7 @@ function CollectionOfDrinks() {
       .post(`${ngrokUrl}/cocktails/add`, newDrink)
       .then((res) => setDrinkCollection([...collectionOfDrinks], newDrink))
       .catch((err) => console.log(err));
+    alert('New drink added!');
   }
 
   function ascendingOrder() {
@@ -145,12 +146,12 @@ function CollectionOfDrinks() {
                 setPopulateEditModal({...item});
                 setModalVisibleUpdate(true);
               }}>
-              <Text style={{}}>Edit</Text>
+              <Text style={styles.itemBtnText}>Edit</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.buttonStyleDelete}
               onPress={() => deleteEndpoint(item.id)}>
-              <Text style={{}}>Delete</Text>
+              <Text style={styles.itemBtnText}>Delete</Text>
             </TouchableOpacity>
           </Card.Actions>
         </Card.Content>
@@ -159,28 +160,31 @@ function CollectionOfDrinks() {
   }
   return (
     <>
-      <Text style={styles.mainHeading}>Cocktails</Text>
-      <TouchableOpacity
-        style={styles.buttonStyleEdit}
-        onPress={() => ascendingOrder()}>
-        <Text>Ascending</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.buttonStyleEdit}
-        onPress={() => descendingOrder()}>
-        <Text>Descending</Text>
-      </TouchableOpacity>
+      <View>
+        <Text style={styles.mainHeading}>Cocktails</Text>
+      </View>
+
+      <TextInput
+        style={styles.input}
+        value={text}
+        onChangeText={(text) => searchFilter(text)}
+        placeholder="Search Cocktail"
+      />
       <View style={styles.displayInRows}>
-        <TextInput
-          style={styles.input}
-          value={text}
-          onChangeText={(text) => searchFilter(text)}
-          placeholder="Search Cocktail"
-        />
+        <TouchableOpacity
+          style={styles.buttonStyleAsc}
+          onPress={() => ascendingOrder()}>
+          <Text style={styles.sortText}>ASC</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.buttonStyleDsc}
+          onPress={() => descendingOrder()}>
+          <Text style={styles.sortText}>DESC</Text>
+        </TouchableOpacity>
         <TouchableOpacity
           style={styles.buttonStyleAddDrink}
           onPress={() => setModalVisibleNewDrink(true)}>
-          <Text>Add Drink</Text>
+          <Text style={styles.addDrinkText}>Add Drink</Text>
         </TouchableOpacity>
       </View>
 
@@ -194,6 +198,7 @@ function CollectionOfDrinks() {
             setModalVisibleNewDrink(!modalVisibleAddDrink);
           }}>
           <View style={styles.centeredView}>
+            <Text style={styles.addHeading}>Add New Drink!</Text>
             <View style={styles.modalView}>
               <TextInput
                 style={styles.modalInput}
@@ -204,6 +209,7 @@ function CollectionOfDrinks() {
               <TextInput
                 style={styles.modalInput}
                 value={millilitersInput}
+                keyboardType="numeric"
                 onChangeText={(millilitersInput) =>
                   setMillilitersInput(millilitersInput)
                 }
@@ -212,12 +218,14 @@ function CollectionOfDrinks() {
               <TextInput
                 style={styles.modalInput}
                 value={alcoholInput}
+                keyboardType="numeric"
                 onChangeText={(alcoholInput) => setAlcoholInput(alcoholInput)}
                 placeholder="Enter percentage of alcohol"
               />
               <TextInput
                 style={styles.modalInput}
                 value={priceInput}
+                keyboardType="numeric"
                 onChangeText={(priceInput) => setPriceInput(priceInput)}
                 placeholder="Enter price"
               />
@@ -242,6 +250,7 @@ function CollectionOfDrinks() {
             setModalVisibleUpdate(!modalVisibleUpdateDrink);
           }}>
           <View style={styles.centeredView}>
+            <Text style={styles.updateHeading}>Update Drink!</Text>
             <View style={styles.modalView}>
               <TextInput
                 style={styles.modalInput}
@@ -316,18 +325,65 @@ function CollectionOfDrinks() {
 }
 
 const styles = StyleSheet.create({
+  addHeading: {
+    fontFamily: 'sans-serif-thin',
+    fontSize: 30,
+  },
+  updateHeading: {
+    fontFamily: 'sans-serif-thin',
+    fontSize: 30,
+  },
+  itemBtnText: {
+    fontFamily: 'sans-serif-thin',
+    color: 'white',
+    fontSize: 20,
+    marginBottom: 5,
+  },
+  addDrinkText: {
+    fontFamily: 'sans-serif-thin',
+    color: 'white',
+    fontSize: 20,
+    marginBottom: 5,
+  },
+  sortText: {
+    fontFamily: 'sans-serif-thin',
+    color: 'white',
+    fontSize: 20,
+    marginBottom: 5,
+  },
+  buttonStyleAsc: {
+    fontSize: 15,
+    backgroundColor: '#2A363B',
+    alignItems: 'center',
+    width: 70,
+    paddingBottom: 5,
+    paddingTop: 10,
+    borderRadius: 3,
+    marginLeft: 12,
+  },
+  buttonStyleDsc: {
+    fontFamily: 'sans-serif-light',
+    fontSize: 15,
+    backgroundColor: '#2A363B',
+    alignItems: 'center',
+    width: 70,
+    paddingBottom: 5,
+    paddingTop: 10,
+    marginLeft: 3,
+    borderRadius: 3,
+  },
   displayInRows: {
     flexDirection: 'row',
-    height: 60,
+    marginBottom: 25,
   },
   buttonStyleAddDrink: {
     fontFamily: 'sans-serif-light',
     fontSize: 15,
-    backgroundColor: '#ff4e50',
+    backgroundColor: '#2A363B',
     alignItems: 'center',
-    width: 60,
-    paddingTop: 18,
-    marginLeft: 10,
+    width: 100,
+    paddingTop: 10,
+    marginLeft: 77,
     borderRadius: 3,
   },
   buttonStyleSearch: {
@@ -356,7 +412,7 @@ const styles = StyleSheet.create({
   buttonStyleEdit: {
     fontFamily: 'sans-serif-light',
     fontSize: 15,
-    backgroundColor: '#ff4e50',
+    backgroundColor: '#2A363B',
     alignItems: 'center',
     width: 50,
     paddingBottom: 10,
@@ -367,7 +423,7 @@ const styles = StyleSheet.create({
   buttonStyleDelete: {
     fontFamily: 'sans-serif-light',
     fontSize: 15,
-    backgroundColor: '#ff4e50',
+    backgroundColor: '#2A363B',
     alignItems: 'center',
     width: 60,
     paddingBottom: 10,
@@ -377,11 +433,14 @@ const styles = StyleSheet.create({
   },
   mainHeading: {
     fontSize: 35,
-    fontFamily: 'sans-serif-light',
+    fontFamily: 'sans-serif-thin',
     textAlign: 'center',
-    backgroundColor: '#ff4e50',
+    backgroundColor: '#2A363B',
     paddingBottom: 10,
     paddingTop: 10,
+    paddingRight: 20,
+    width: '100%',
+    color: 'white',
   },
   image: {
     width: 350,
