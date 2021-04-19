@@ -38,7 +38,8 @@ function CollectionOfDrinks() {
     axios
       .get(`${ngrokUrl}/cocktails/alldrinks`)
       .then((res) => {
-        setDrinkCollectionFull(res.data); setDrinkCollection(res.data);
+        setDrinkCollectionFull(res.data);
+        setDrinkCollection(res.data);
       })
       .catch((err) => console.log(err));
   }, [modalVisibleAddDrink, modalVisibleUpdateDrink]);
