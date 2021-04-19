@@ -38,17 +38,17 @@ function CollectionOfDrinks() {
     axios
       .get(`${ngrokUrl}/cocktails/alldrinks`)
       .then((res) => {
-        setDrinkCollectionFull(res.data), setDrinkCollection(res.data);
+        setDrinkCollectionFull(res.data); setDrinkCollection(res.data);
       })
       .catch((err) => console.log(err));
   }, [modalVisibleAddDrink, modalVisibleUpdateDrink]);
   // Saerch filter for cocktail collection
-  function searchFilter(text) {
-    setText(text);
+  function searchFilter(textValue) {
+    setText(textValue);
     // Can try include function here, maybe.
     const newData = collectionOfDrinksFull.filter((item) => {
       const itemData = item.drinkName.toUpperCase();
-      const textData = text.toUpperCase();
+      const textData = textValue.toUpperCase();
 
       return itemData.indexOf(textData) > -1;
     });
@@ -81,7 +81,7 @@ function CollectionOfDrinks() {
       .post(`${ngrokUrl}/cocktails/add`, newDrink)
       .then((res) => setDrinkCollection([...collectionOfDrinks], newDrink))
       .catch((err) => console.log(err));
-    alert('New drink added!');
+    Alert.alert('New drink added!');
   }
 
   function ascendingOrder() {
